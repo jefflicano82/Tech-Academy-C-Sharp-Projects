@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooleanLogicInsurance", "BooleanLogicInsurance\BooleanLogicInsurance.csproj", "{5F481415-017A-402F-84E5-714D63DE4804}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F481415-017A-402F-84E5-714D63DE4804}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F481415-017A-402F-84E5-714D63DE4804}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F481415-017A-402F-84E5-714D63DE4804}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F481415-017A-402F-84E5-714D63DE4804}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EC96ED6F-C491-48EC-B5D8-95B2BFD993DE}
+	EndGlobalSection
+EndGlobal
