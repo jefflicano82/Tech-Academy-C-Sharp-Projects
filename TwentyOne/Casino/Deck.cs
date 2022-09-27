@@ -22,10 +22,10 @@ namespace Casino
             {
                 foreach (string suit in Suits)
                 {
-                    //Card card = new Card();
-                    //card.Suit = suit;
-                    //card.Face = face;
-                    //Cards.Add(card);
+                    Card card = new Card();
+                    card.Suit = suit;
+                    card.Face = face;
+                    Cards.Add(card);
                 }
             }
         }
