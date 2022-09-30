@@ -36,20 +36,15 @@ namespace CarInsurance.Controllers
         }
 
         // GET: Insuree/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: Insuree/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,EmailAddress,DateOfBirth,CarYear,CarMake,CarModel,DUI,SpeedingTickets,CoverageType,Quote")] Insuree insuree)
+        public ActionResult Create(int Id, [Bind(Include = "Id,FirstName,LastName,EmailAddress,DateOfBirth,CarYear,CarMake,CarModel,DUI,SpeedingTickets,CoverageType,Quote")] Insuree insuree)
         {
             if (ModelState.IsValid)
             {
+                CalculateQuote(Id);
+                var quote = CalculateQuote(Id);
                 db.Insurees.Add(insuree);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -73,9 +68,6 @@ namespace CarInsurance.Controllers
             return View(insuree);
         }
 
-        // POST: Insuree/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,EmailAddress,DateOfBirth,CarYear,CarMake,CarModel,DUI,SpeedingTickets,CoverageType,Quote")] Insuree insuree)
@@ -123,10 +115,9 @@ namespace CarInsurance.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult CalculateQuote(int Id)
+        public decimal CalculateQuote(int Id)
         {
-            using (InsuranceEntities db = new InsuranceEntities())
-            {
+            
                 var insuree = db.Insurees.Find(Id);
                 var dateOfBirth = insuree.DateOfBirth;
                 var carYear = insuree.CarYear;
@@ -182,10 +173,8 @@ namespace CarInsurance.Controllers
                     quote = quote + (quote / 2.0M);
                 }
                 insuree.Quote = quote;
-                db.SaveChanges();
-
-            }
-            return View("Index");
+           
+            return (int) quote;
         }
     }
 }
