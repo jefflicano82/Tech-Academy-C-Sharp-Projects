@@ -43,8 +43,8 @@ namespace CarInsurance.Controllers
         {
             if (ModelState.IsValid)
             {
-                CalculateQuote(Id);
                 var quote = CalculateQuote(Id);
+                insuree.Quote = quote;
                 db.Insurees.Add(insuree);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -172,7 +172,7 @@ namespace CarInsurance.Controllers
                 {
                     quote = quote + (quote / 2.0M);
                 }
-                insuree.Quote = quote;
+                
            
             return (int) quote;
         }
