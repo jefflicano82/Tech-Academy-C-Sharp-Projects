@@ -38,7 +38,9 @@ namespace Casino
                 return true;
             }
         }
-        
+ public bool isBusted { get; set; }
+
+
         public static Game operator+ (Game game, Player player)
         {
             game.Players.Add(player);

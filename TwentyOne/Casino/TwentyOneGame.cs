@@ -38,7 +38,7 @@ namespace Casino.TwentyOne
                 
                 if (bet<0)
                 {
-                    throw new Exception(FraudException);
+                    throw new FraudException();
                 }
                 bool succesfullyBet = player.Bet(bet);
                 if (!succesfullyBet)
@@ -111,11 +111,13 @@ namespace Casino.TwentyOne
                         if (answer=="yes"|| answer=="yeah")
                         {
                             player.isActivelyPlaying = true;
+                            break;
                         }
                         else
                         {
                             player.isActivelyPlaying = false;
-                            return;
+                            break;
+                            //return;
                         }
                     }
                 }
@@ -139,8 +141,14 @@ namespace Casino.TwentyOne
                 foreach(KeyValuePair<Player, int> entry in Bets)
                 {
                     Console.WriteLine("{0} won {1}!", entry.Key.Name, entry.Value);
-                    Players.Where(x => x.Name == entry.Key.Name).First().Balance += (entry.Value * 2);
-                    Dealer.Balance -= entry.Value;
+                    //Players.Where(x => x.Name == entry.Key.Name).First().Balance += (entry.Value * 2);
+                    Player player = Players.Where(x => x.Name == entry.Key.Name).First();
+                    if(!player.isBusted)
+                    {
+                        player.Balance += (entry.Value * 2);
+                        Dealer.Balance -= entry.Value;
+                    }
+                    
                 }
                 return;
             }

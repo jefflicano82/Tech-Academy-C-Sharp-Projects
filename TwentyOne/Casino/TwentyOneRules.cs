@@ -75,8 +75,10 @@ namespace Casino.TwentyOne
             int[]playerResults = GetAllPossibleHandValues(PlayerHand);
             int[] dealerResults = GetAllPossibleHandValues(DealerHand);
 
-            int playerScore = playerResults.Where(x => x < 22).Max();
-            int dealerScore = dealerResults.Where(x => x < 22).Max();
+            int playerScore = playerResults.Where(x => x < 22).DefaultIfEmpty(0).Max();
+
+            
+            int dealerScore = dealerResults.Where(x => x < 22).DefaultIfEmpty(0).Max();
             if (playerScore > dealerScore) return true;
             else if (playerScore < dealerScore) return false;
             else return null;
@@ -86,3 +88,4 @@ namespace Casino.TwentyOne
 
     }
 }
+ 

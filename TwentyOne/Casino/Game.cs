@@ -8,6 +8,7 @@ namespace Casino
 {
     public  abstract class Game 
     {
+        
         private List<Player> _players = new List<Player>();
         private Dictionary<Player, int> _bets = new Dictionary<Player, int>();
         public List<Player> Players { get { return _players; } set { _players = value; } }
