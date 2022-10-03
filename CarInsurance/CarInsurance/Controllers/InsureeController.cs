@@ -36,17 +36,20 @@ namespace CarInsurance.Controllers
         }
 
         // GET: Insuree/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int Id, [Bind(Include = "Id,FirstName,LastName,EmailAddress,DateOfBirth,CarYear,CarMake,CarModel,DUI,SpeedingTickets,CoverageType,Quote")] Insuree insuree)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,EmailAddress,DateOfBirth,CarYear,CarMake,CarModel,DUI,SpeedingTickets,CoverageType")] Insuree insuree)
         {
             if (ModelState.IsValid)
             {
-                var quote = CalculateQuote(Id);
-                insuree.Quote = quote;
                 db.Insurees.Add(insuree);
                 db.SaveChanges();
+                CalculateQuote(insuree.Id);
                 return RedirectToAction("Index");
             }
 
@@ -115,7 +118,7 @@ namespace CarInsurance.Controllers
             }
             base.Dispose(disposing);
         }
-        public decimal CalculateQuote(int Id)
+        public ActionResult CalculateQuote(int Id)
         {
             
                 var insuree = db.Insurees.Find(Id);
@@ -127,17 +130,19 @@ namespace CarInsurance.Controllers
                 var dui = insuree.DUI;
                 var coverageType = insuree.CoverageType;
 
+                var age = DateTime.Today.Year - dateOfBirth.Year; 
+                
                 var quote = 50.0M;
 
-                if (dateOfBirth.Year >= 2004)
+                if (age<=18)
                 {
                     quote = quote + 100.00M;
                 }
-                else if (dateOfBirth.Year <= 2003 && dateOfBirth.Year >= 1997)
+                else if (age>=19 && age <=25)
                 {
                     quote = quote + 50.0M;
                 }
-                else if (dateOfBirth.Year < 1995)
+                else if (age>=26)
                 {
                     quote = quote + 25.0M;
                 }
@@ -158,10 +163,14 @@ namespace CarInsurance.Controllers
 
                 if (carMake == "Porsche" && carModel == "911 Carrera")
                 {
-                    quote = quote + 50.0M;
+                    quote = quote + 25M;
                 }
-
+                
+                if (speedingTickets > 0)
+            {
                 quote = quote + (speedingTickets * 10.0M);
+            }
+                
 
                 if (dui == true)
                 {
@@ -172,9 +181,14 @@ namespace CarInsurance.Controllers
                 {
                     quote = quote + (quote / 2.0M);
                 }
-                
+            db.SaveChanges();
+            return RedirectToAction("Index");
            
-            return (int) quote;
+            //return (int) quote;
         }
+        public ActionResult Admin()
+        {
+            return View(db.Insurees.ToList());
+    }
     }
 }

@@ -1,7 +1,10 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Admin";
 }
 
 <h2>Admin</h2>
 
+public ActionResult Admin()
+{
+    return View(db.Insurees.ToList())
+}
