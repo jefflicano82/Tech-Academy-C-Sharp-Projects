@@ -181,6 +181,8 @@ namespace CarInsurance.Controllers
                 {
                     quote = quote + (quote / 2.0M);
                 }
+            insuree.Quote = quote;
+
             db.SaveChanges();
             return RedirectToAction("Index");
            
